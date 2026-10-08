@@ -1,0 +1,22 @@
+{
+  "model_name": "Multimodal Image & OCR Fraud Pipeline",
+  "supported_image_formats": [
+    "png",
+    "jpg",
+    "jpeg",
+    "webp",
+    "bmp"
+  ],
+  "max_image_dimension_px": 4096,
+  "ocr_pipeline": {
+    "primary": "pytesseract",
+    "secondary": "easyocr",
+    "fallback": "pil_layout_parser"
+  },
+  "heuristics": {
+    "flag_qr_codes": true,
+    "flag_payment_logos": true,
+    "flag_fake_captcha": true
+  },
+  "version": "1.0.0"
+}

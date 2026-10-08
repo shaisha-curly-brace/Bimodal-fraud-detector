@@ -1,0 +1,57 @@
+[
+  {
+    "id": "adv_001",
+    "type": "adversarial_mismatch",
+    "description": "Benign innocent greeting with hidden malicious phishing URL",
+    "text": "Hey buddy! Check out the vacation photos from our weekend trip right here:",
+    "url": "http://free-giftcard-login-portal.ru/photos",
+    "ground_truth": "fraud",
+    "expected_risk": "HIGH",
+    "primary_modality_threat": "url",
+    "notes": "Text model alone predicts benign, but lexical URL model detects phishing, triggering multimodal safety escalation."
+  },
+  {
+    "id": "adv_002",
+    "type": "adversarial_mismatch",
+    "description": "Urgent Bank of America alert pointing to unrelated legitimate Google domain (Brand Discrepancy)",
+    "text": "BANK OF AMERICA: Urgent! Your checking account has been compromised. Verify immediately:",
+    "url": "https://google.com",
+    "ground_truth": "fraud",
+    "expected_risk": "HIGH",
+    "primary_modality_threat": "contradiction",
+    "notes": "Contradiction engine flags severe brand mismatch: Text claims Bank of America but URL points to google.com."
+  },
+  {
+    "id": "adv_003",
+    "type": "adversarial_mismatch",
+    "description": "Smishing urgency text with legitimate brand URL to evade simple domain filters",
+    "text": "URGENT SECURITY ALERT: Unauthorized transfer of $2,450 detected. Call 1-800-FAKE immediately or visit your portal at https://paypal.com",
+    "url": "https://paypal.com",
+    "ground_truth": "fraud",
+    "expected_risk": "HIGH",
+    "primary_modality_threat": "text",
+    "notes": "Text contains heavy smishing/urgency triggers despite legitimate domain in URL; text classifier and urgency detector flag the threat."
+  },
+  {
+    "id": "adv_004",
+    "type": "adversarial_mismatch",
+    "description": "Subdomain brand spoofing with high-risk TLD",
+    "text": "Netflix billing: Your membership has been paused. Restore access here: https://netflix.com.verify-billing-center.xyz/reactivate",
+    "url": "https://netflix.com.verify-billing-center.xyz/reactivate",
+    "ground_truth": "fraud",
+    "expected_risk": "CRITICAL",
+    "primary_modality_threat": "both",
+    "notes": "Brand 'netflix' is in the subdomain while root domain is verify-billing-center.xyz with suspicious TLD .xyz."
+  },
+  {
+    "id": "adv_005",
+    "type": "adversarial_mismatch",
+    "description": "Shortened/redirect masking with IP literal link in conversational text",
+    "text": "Hey check out the agenda for our project sync: http://185.220.101.5/meeting-notes.pdf",
+    "url": "http://185.220.101.5/meeting-notes.pdf",
+    "ground_truth": "fraud",
+    "expected_risk": "HIGH",
+    "primary_modality_threat": "url",
+    "notes": "Raw IP address literal in URL indicates direct evasion of DNS reputation and hosting on suspect VPS."
+  }
+]

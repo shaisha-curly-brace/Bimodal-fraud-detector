@@ -1,0 +1,48 @@
+{
+  "model_name": "Multimodal Fusion Meta-Classifier (Text + URL + Contradiction)",
+  "eval_set_constraint": "100% Organic SMS-URL Pairs (Zero Synthetic Data in Test Split)",
+  "accuracy": 0.9608,
+  "precision": 0.9608,
+  "recall": 1.0,
+  "f1_score": 0.98,
+  "roc_auc": 1.0,
+  "confusion_matrix": [
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      49
+    ]
+  ],
+  "classification_report": {
+    "0": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 2.0
+    },
+    "1": {
+      "precision": 0.9607843137254902,
+      "recall": 1.0,
+      "f1-score": 0.98,
+      "support": 49.0
+    },
+    "accuracy": 0.9607843137254902,
+    "macro avg": {
+      "precision": 0.4803921568627451,
+      "recall": 0.5,
+      "f1-score": 0.49,
+      "support": 51.0
+    },
+    "weighted avg": {
+      "precision": 0.9231064975009612,
+      "recall": 0.9607843137254902,
+      "f1-score": 0.9415686274509804,
+      "support": 51.0
+    }
+  },
+  "train_samples": 770,
+  "organic_test_samples": 51
+}

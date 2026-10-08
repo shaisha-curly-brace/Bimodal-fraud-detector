@@ -1,0 +1,49 @@
+{
+  "model_name": "Deployable Lexical URL Classifier (XGBoost)",
+  "features_type": "lexical_structural_only (zero_crawl)",
+  "num_features": 28,
+  "accuracy": 0.998,
+  "precision": 0.9997,
+  "recall": 0.9956,
+  "f1_score": 0.9977,
+  "roc_auc": 0.9989,
+  "confusion_matrix": [
+    [
+      26964,
+      6
+    ],
+    [
+      88,
+      20016
+    ]
+  ],
+  "classification_report": {
+    "Legitimate": {
+      "precision": 0.9967470057666716,
+      "recall": 0.9997775305895439,
+      "f1-score": 0.9982599681611195,
+      "support": 26970.0
+    },
+    "Fraud": {
+      "precision": 0.9997003296373989,
+      "recall": 0.9956227616394747,
+      "f1-score": 0.9976573792553457,
+      "support": 20104.0
+    },
+    "accuracy": 0.9980031439860645,
+    "macro avg": {
+      "precision": 0.9982236677020353,
+      "recall": 0.9977001461145093,
+      "f1-score": 0.9979586737082327,
+      "support": 47074.0
+    },
+    "weighted avg": {
+      "precision": 0.9980082884938054,
+      "recall": 0.9980031439860645,
+      "f1-score": 0.9980026191497401,
+      "support": 47074.0
+    }
+  },
+  "train_samples": 188296,
+  "test_samples": 47074
+}

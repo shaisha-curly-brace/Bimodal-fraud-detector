@@ -1,0 +1,47 @@
+{
+  "model_name": "Text Fraud Classifier (Word+Char TF-IDF + Calibrated LR)",
+  "accuracy": 0.9854,
+  "precision": 0.9946,
+  "recall": 0.92,
+  "f1_score": 0.9558,
+  "roc_auc": 0.9954,
+  "confusion_matrix": [
+    [
+      966,
+      1
+    ],
+    [
+      16,
+      184
+    ]
+  ],
+  "classification_report": {
+    "Legitimate": {
+      "precision": 0.9837067209775967,
+      "recall": 0.9989658738366081,
+      "f1-score": 0.991277578245254,
+      "support": 967.0
+    },
+    "Fraud": {
+      "precision": 0.9945945945945946,
+      "recall": 0.92,
+      "f1-score": 0.9558441558441558,
+      "support": 200.0
+    },
+    "accuracy": 0.9854327335047129,
+    "macro avg": {
+      "precision": 0.9891506577860957,
+      "recall": 0.959482936918304,
+      "f1-score": 0.9735608670447049,
+      "support": 1167.0
+    },
+    "weighted avg": {
+      "precision": 0.9855726804663709,
+      "recall": 0.9854327335047129,
+      "f1-score": 0.9852050122810555,
+      "support": 1167.0
+    }
+  },
+  "train_samples": 4664,
+  "test_samples": 1167
+}

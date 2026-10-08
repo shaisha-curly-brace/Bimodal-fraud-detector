@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bimodal Fraud &amp; Phishing Detection</title>
+  <meta name="description" content="Production bimodal threat intelligence system for SMS text and URL lexical analysis with explainable threat intelligence.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230f172a' stroke-width='2'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/></svg>">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="brand-wrapper">
+      <div class="brand-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path d="m9 12 2 2 4-4"/>
+        </svg>
+      </div>
+      <div>
+        <h1 class="brand-title">Bimodal Fraud Detection</h1>
+        <div class="brand-subtitle">Real-time SMS semantics and lexical URL analysis with explainable threat intelligence.</div>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <div class="status-indicator">
+        <span class="status-dot"></span>
+        <span id="systemStatusText">Online</span>
+      </div>
+      <div class="version-chip">v1.0.0</div>
+    </div>
+  </header>
+
+  <!-- Main Application Container -->
+  <main class="app-container">
+    
+    <!-- Tab Navigation -->
+    <nav class="tab-navigation">
+      <button class="nav-tab active" id="tabScannerBtn" onclick="switchMainTab('scanner')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.3-4.3"/>
+        </svg>
+        <span>Threat Scanner</span>
+      </button>
+      <button class="nav-tab" id="tabBenchmarksBtn" onclick="switchMainTab('benchmarks')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 3v18h18"/>
+          <path d="M18 17V9"/>
+          <path d="M13 17V5"/>
+          <path d="M8 17v-3"/>
+        </svg>
+        <span>Model Benchmarks &amp; Ablation</span>
+      </button>
+      <button class="nav-tab" id="tabApiBtn" onclick="switchMainTab('api')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="16 18 22 12 16 6"/>
+          <polyline points="8 6 2 12 8 18"/>
+        </svg>
+        <span>API &amp; JSON Inspector</span>
+      </button>
+    </nav>
+
+    <!-- TAB 1: Live Threat Scanner -->
+    <section id="tabScanner" class="tab-content active">
+      <div class="dashboard-grid">
+        
+        <!-- Left Column: Input Panel -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+                <polyline points="10 9 9 9 8 9"/>
+              </svg>
+              <span>Input Threat Telemetry</span>
+            </h2>
+          </div>
+
+          <!-- Mode Switcher -->
+          <div class="mode-switcher">
+            <button type="button" class="mode-btn active" id="inputModeText" onclick="setInputMode('text')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+              <span>SMS text + URL</span>
+            </button>
+            <button type="button" class="mode-btn" id="inputModeUrl" onclick="setInputMode('url')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+              <span>URL only</span>
+            </button>
+          </div>
+
+          <form id="fraudAnalysisForm" onsubmit="handleAnalyzeSubmit(event)">
+            
+            <!-- SMS Text Input Group -->
+            <div class="input-group" id="groupTextMessage">
+              <label for="inputMessageText" class="input-label">
+                <span>SMS message text</span>
+              </label>
+              <textarea 
+                id="inputMessageText" 
+                class="form-textarea" 
+                rows="4"
+                placeholder="Paste message text to analyze (e.g., 'CHASE: Your debit card has been locked. Verify at http://chase-login-portal.xyz/verify')"
+                oninput="updateCharCount()"
+              ></textarea>
+              <div class="textarea-footer">
+                <span class="input-hint">Inline URLs are automatically extracted and verified against brand domain and lexical models.</span>
+                <span class="char-counter" id="charCounter">0 / 500 characters</span>
+              </div>
+            </div>
+
+            <!-- Optional Explicit URL Input -->
+            <div class="input-group" id="groupExplicitUrl">
+              <label for="inputExplicitUrl" class="input-label">
+                <span>Destination URL <span class="label-optional">(optional if embedded in text)</span></span>
+              </label>
+              <input 
+                type="text" 
+                id="inputExplicitUrl" 
+                class="form-input" 
+                placeholder="https://example.com/login"
+              />
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" id="btnAnalyze" class="btn-submit">
+              <span id="btnSpinner" class="btn-spinner" style="display: none;"></span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="btnIcon">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+              <span id="btnText">Analyze Fraud Risk &rarr;</span>
+            </button>
+          </form>
+
+          <!-- Preloaded Curated Test Cases -->
+          <div class="test-case-section">
+            <div class="test-case-heading">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+              </svg>
+              <span>Preloaded test cases</span>
+            </div>
+            
+            <div class="test-case-group group-phish">
+              <div class="group-header">Phishing and smishing</div>
+              <div class="case-list" id="pillsOrganicPositive"></div>
+            </div>
+
+            <div class="test-case-group group-legit">
+              <div class="group-header">Legitimate and benign</div>
+              <div class="case-list" id="pillsOrganicNegative"></div>
+            </div>
+
+            <div class="test-case-group group-adv">
+              <div class="group-header">Brand discrepancy and adversarial evasion</div>
+              <div class="case-list" id="pillsAdversarial"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Threat Assessment & Decision Fusion -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 3v18h18"/>
+                <path d="M18 17V9"/>
+                <path d="M13 17V5"/>
+                <path d="M8 17v-3"/>
+              </svg>
+              <span>Threat Assessment</span>
+            </h2>
+            <div class="panel-meta" id="lastAnalysisTime">Last analysis: &mdash;</div>
+          </div>
+
+          <!-- Dynamic SVG Gauge -->
+          <div id="riskMeterContainer">
+            <!-- Rendered by RiskMeter component -->
+          </div>
+
+          <!-- Modality Breakdown Cards -->
+          <div id="modalityCardsContainer">
+            <!-- Rendered by ResultCard component -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Full-Width Evidence Section -->
+      <div id="evidencePanelContainer" class="evidence-container">
+        <!-- Rendered by EvidencePanel component -->
+      </div>
+    </section>
+
+    <!-- TAB 2: Model Benchmarks & Ablation -->
+    <section id="tabBenchmarks" class="tab-content" style="display: none;">
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"/>
+              <line x1="12" y1="20" x2="12" y2="4"/>
+              <line x1="6" y1="20" x2="6" y2="14"/>
+            </svg>
+            <span>Model Benchmarks and Modality Ablation Matrix</span>
+          </h2>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-value" id="kpiTextAuc">0.9954</div>
+            <div class="kpi-label">Text Classifier ROC-AUC</div>
+            <div class="kpi-sub">Dual-stream TF-IDF + Calibrated LR</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value" id="kpiUrlAuc">0.9989</div>
+            <div class="kpi-label">Lexical URL ROC-AUC</div>
+            <div class="kpi-sub">XGBoost on 28 structural features</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value" id="kpiFusionAuc">1.0000</div>
+            <div class="kpi-label">Multimodal Fusion ROC-AUC</div>
+            <div class="kpi-sub">Decision combiner on organic test split</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value kpi-highlight">0.15 ms</div>
+            <div class="kpi-label">Lexical URL Latency</div>
+            <div class="kpi-sub">Instant zero-crawl execution</div>
+          </div>
+        </div>
+
+        <!-- Modality Ablation Table -->
+        <div class="card-section">
+          <div class="card-section-header">
+            <h3 class="card-section-title">Modality Performance Comparison</h3>
+          </div>
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Architecture</th>
+                  <th>Features evaluated</th>
+                  <th>Accuracy</th>
+                  <th>Precision</th>
+                  <th>Recall</th>
+                  <th>F1 Score</th>
+                  <th>ROC-AUC</th>
+                  <th>Latency</th>
+                </tr>
+              </thead>
+              <tbody id="ablationTableBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Zero-Crawl Comparison Section -->
+        <div class="card-section">
+          <div class="card-section-header">
+            <h3 class="card-section-title">URL Feature Constraint: Deployable Lexical (Zero-Crawl) vs Full-Crawl Content</h3>
+          </div>
+          <p class="section-desc">
+            The deployable model operates under a strict zero-crawl constraint to guarantee instantaneous inference without external network lookups, crawler blocking, or latency overhead.
+          </p>
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Configuration</th>
+                  <th>Input requirements</th>
+                  <th>Accuracy</th>
+                  <th>ROC-AUC</th>
+                  <th>Network latency</th>
+                  <th>Production status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Deployable Lexical Model (XGBoost)</strong></td>
+                  <td>Raw URL string (28 structural features)</td>
+                  <td class="text-safe"><strong>99.80%</strong></td>
+                  <td class="text-safe"><strong>0.9989</strong></td>
+                  <td>0 ms (Zero crawl)</td>
+                  <td><span class="status-tag tag-safe">Production Ready</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Full Crawl-Content Baseline</strong></td>
+                  <td>Lexical + 27 Live DOM/HTML features</td>
+                  <td>99.82%</td>
+                  <td>0.9997</td>
+                  <td>~1,500 ms (Live HTTP fetch)</td>
+                  <td><span class="status-tag tag-danger">Unfeasible for SMS</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: API & JSON Inspector -->
+    <section id="tabApi" class="tab-content" style="display: none;">
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 18 22 12 16 6"/>
+              <polyline points="8 6 2 12 8 18"/>
+            </svg>
+            <span>Structured JSON Response Inspector</span>
+          </h2>
+          <button type="button" class="btn-secondary" onclick="copyJsonToClipboard()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            <span>Copy JSON</span>
+          </button>
+        </div>
+        <pre id="jsonViewer" class="json-code-box">// Perform an analysis or select a test case to view the structured response payload...</pre>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Reporter Information Modal Dialog (Submission-Ready Complaint Dossier) -->
+  <div class="modal-backdrop" id="complaintModalBackdrop">
+    <div class="modal-dialog" role="dialog" aria-labelledby="modalComplaintTitle" aria-modal="true">
+      <div class="modal-header">
+        <div class="modal-title" id="modalComplaintTitle">Download Incident Complaint Dossier</div>
+        <button type="button" class="modal-close-btn" onclick="closeComplaintModal()" aria-label="Close modal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <form id="complaintReportForm" onsubmit="handleComplaintSubmit(event)">
+        <div class="modal-body">
+          <div class="modal-note">
+            This incident exhibits high threat indicators. Complete complainant details to generate a submission-ready complaint document with a unique case reference ID.
+          </div>
+
+          <div class="input-group">
+            <label for="reporterName" class="input-label">
+              <span>Full Name <span class="text-danger">*</span></span>
+            </label>
+            <input 
+              type="text" 
+              id="reporterName" 
+              class="form-input" 
+              placeholder="e.g. Dr. Alex Morgan" 
+              required
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="reporterEmail" class="input-label">
+              <span>Email Address <span class="text-danger">*</span></span>
+            </label>
+            <input 
+              type="email" 
+              id="reporterEmail" 
+              class="form-input" 
+              placeholder="e.g. alex.morgan@example.com" 
+              required
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="reporterPhone" class="input-label">
+              <span>Phone Number <span class="label-optional">(optional)</span></span>
+            </label>
+            <input 
+              type="tel" 
+              id="reporterPhone" 
+              class="form-input" 
+              placeholder="e.g. +1-555-019-8822"
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="reporterChannel" class="input-label">
+              <span>Platform / Channel Received On</span>
+            </label>
+            <select id="reporterChannel" class="form-input">
+              <option value="SMS" selected>SMS (Text message)</option>
+              <option value="WhatsApp">WhatsApp</option>
+              <option value="Email">Email</option>
+              <option value="Other">Other Messaging App</option>
+            </select>
+          </div>
+
+          <div class="input-group" style="margin-bottom: 0;">
+            <label for="reporterNotes" class="input-label">
+              <span>Supplementary Incident Notes <span class="label-optional">(optional)</span></span>
+            </label>
+            <textarea 
+              id="reporterNotes" 
+              class="form-textarea" 
+              rows="3" 
+              placeholder="Describe how or when you received this message, any financial demands made, or additional context for investigators."
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" onclick="closeComplaintModal()">Cancel</button>
+          <button type="submit" class="btn-report btn-report-danger" id="btnModalSubmit">
+            <span id="btnModalSpinner" class="btn-spinner" style="display: none;"></span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="btnModalIcon">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="12" y1="18" x2="12" y2="12"/>
+              <line x1="9" y1="15" x2="15" y2="15"/>
+            </svg>
+            <span id="btnModalText">Generate &amp; Download Complaint PDF</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Component Scripts -->
+  <script src="components/risk-meter.js"></script>
+  <script src="components/result-card.js"></script>
+  <script src="components/evidence-panel.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

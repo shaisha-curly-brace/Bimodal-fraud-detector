@@ -1,0 +1,52 @@
+[
+  {
+    "id": "pos_001",
+    "type": "organic_smishing",
+    "description": "Urgent banking security alert with malicious domain",
+    "text": "CHASE SECURITY: Your debit card has been suspended due to suspicious activity. Verify your identity immediately at http://chase-secure-verify.com/login",
+    "url": "http://chase-secure-verify.com/login",
+    "ground_truth": "fraud",
+    "expected_risk": "HIGH",
+    "primary_modality_threat": "both"
+  },
+  {
+    "id": "pos_002",
+    "type": "organic_smishing",
+    "description": "Delivery package fee scam with suspicious TLD",
+    "text": "USPS: Your package could not be delivered due to an unpaid $1.99 customs fee. Update your details now: http://usps-tracking-package.xyz/update",
+    "url": "http://usps-tracking-package.xyz/update",
+    "ground_truth": "fraud",
+    "expected_risk": "HIGH",
+    "primary_modality_threat": "both"
+  },
+  {
+    "id": "pos_003",
+    "type": "organic_smishing",
+    "description": "PayPal account limitation phishing",
+    "text": "PayPal Alert: We detected an unauthorized login from Russia. Your account has been limited. Resolve immediately at https://paypal-account-recovery.top/auth",
+    "url": "https://paypal-account-recovery.top/auth",
+    "ground_truth": "fraud",
+    "expected_risk": "HIGH",
+    "primary_modality_threat": "both"
+  },
+  {
+    "id": "pos_004",
+    "type": "organic_spam",
+    "description": "Lottery prize scam with raw IP address",
+    "text": "CONGRATULATIONS! You have won $50,000 in the UK National Lottery promo. Claim your cash award now: http://194.67.210.15/claim-prize",
+    "url": "http://194.67.210.15/claim-prize",
+    "ground_truth": "fraud",
+    "expected_risk": "CRITICAL",
+    "primary_modality_threat": "both"
+  },
+  {
+    "id": "pos_005",
+    "type": "organic_smishing",
+    "description": "Netflix payment declined with obfuscated URL",
+    "text": "Netflix: We were unable to process your monthly subscription payment. Update your billing method to avoid service interruption: http://netflix.billing-update.info/login",
+    "url": "http://netflix.billing-update.info/login",
+    "ground_truth": "fraud",
+    "expected_risk": "HIGH",
+    "primary_modality_threat": "both"
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "id": "neg_001",
+    "type": "organic_legitimate",
+    "description": "Standard banking transaction notification with official domain",
+    "text": "Your CHASE account balance update: Transaction of $45.20 was approved at TARGET. View details at https://chase.com",
+    "url": "https://chase.com",
+    "ground_truth": "legitimate",
+    "expected_risk": "LOW",
+    "primary_modality_threat": "none"
+  },
+  {
+    "id": "neg_002",
+    "type": "organic_legitimate",
+    "description": "Authentic 2FA OTP message from Google",
+    "text": "G-584920 is your Google verification code. Never share this code with anyone.",
+    "url": "https://accounts.google.com",
+    "ground_truth": "legitimate",
+    "expected_risk": "LOW",
+    "primary_modality_threat": "none"
+  },
+  {
+    "id": "neg_003",
+    "type": "organic_legitimate",
+    "description": "Amazon shipping confirmation",
+    "text": "Your Amazon order #402-8829103 has shipped. Track your shipment at https://amazon.com",
+    "url": "https://amazon.com",
+    "ground_truth": "legitimate",
+    "expected_risk": "LOW",
+    "primary_modality_threat": "none"
+  },
+  {
+    "id": "neg_004",
+    "type": "organic_legitimate",
+    "description": "Casual personal message without threats",
+    "text": "Hey, what time are we meeting for lunch tomorrow? Let me know when you are free.",
+    "url": null,
+    "ground_truth": "legitimate",
+    "expected_risk": "LOW",
+    "primary_modality_threat": "none"
+  },
+  {
+    "id": "neg_005",
+    "type": "organic_legitimate",
+    "description": "Official Netflix password change receipt",
+    "text": "Your Netflix password was recently changed. If you made this change, no action is needed. https://netflix.com",
+    "url": "https://netflix.com",
+    "ground_truth": "legitimate",
+    "expected_risk": "LOW",
+    "primary_modality_threat": "none"
+  }
+]

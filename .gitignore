@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Large Datasets & Serialized Artifacts
+ml/datasets/raw/*
+!ml/datasets/raw/.gitkeep
+model_weights/*/*.joblib
+ml/experiments/results/*
+!ml/experiments/results/.gitkeep
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+*.mp4
