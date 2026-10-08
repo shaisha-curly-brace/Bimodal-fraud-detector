@@ -1,4 +1,4 @@
-# 🛡️ Bimodal Fraud & Phishing Detection System (Text + URL)
+#  Bimodal Fraud & Phishing Detection System (Text + URL)
 
 An end-to-end bimodal threat intelligence and fraud detection engine that evaluates SMS message semantics, inline URLs, and cross-modal brand contradictions in real time.
 
@@ -6,7 +6,7 @@ Built strictly using the **Mendeley SMS Phishing Corpus (5,971 messages)** and t
 
 ---
 
-## ⚡ Quickstart for Demo (Ready in < 2 minutes)
+##  Quickstart for Demo (Ready in < 2 minutes)
 
 Follow these exact steps from a clean checkout to a fully running dashboard:
 
@@ -29,24 +29,24 @@ python run.py
 
 ### 4. Open the Threat Intelligence Dashboard
 Open your browser to:
-- 🖥️ **Dashboard UI**: [http://localhost:8000](http://localhost:8000)
-- 📖 **Interactive Swagger Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
+-  **Dashboard UI**: [http://localhost:8000](http://localhost:8000)
+- **Interactive Swagger Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
 
 *In the dashboard, click any preloaded test case button (e.g., "Urgent Bank of America alert") or paste any message + URL, and click **Analyze Fraud Risk** to view real-time risk scores (0–100), modality breakdown cards, and forensic XAI evidence.*
 
 ---
 
-## 🚀 Key Highlights & Architectural Features
+##  Key Highlights & Architectural Features
 
-- **⚡ Zero-Crawl Deployable URL Engine**: Operates exclusively on **28 dense lexical and structural features** modeled with **XGBoost**, running in **0.15ms** without live webpage crawling, DNS delays, or bot-blocking vulnerabilities.
-- **💬 Dual-Stream TF-IDF Text Classifier**: Combines word ($1\text{--}2\text{-grams}$) and character boundary ($3\text{--}5\text{-grams}$) representations with 5-fold cross-validated sigmoid calibration (`CalibratedClassifierCV`). Directly feeds token weights into XAI evidence cards.
-- **⚖️ Cross-Modal Contradiction Analyzer**: Flags brand impersonation (e.g. text claiming "Chase Bank" while linking to an unauthorized domain), subdomain spoofing, and link shortener evasion against authoritative brand domain mappings.
-- **🔬 Explainable AI (XAI)**: Generates human-readable evidence cards, token risk heatmaps, URL lexical anatomy tables, and defensive security guidance.
-- **🖥️ Cyber Threat Intelligence Dashboard**: High-contrast dark theme with animated SVG risk gauge meters, bimodal breakdown cards, and preloaded test case quick-loaders.
+- ** Zero-Crawl Deployable URL Engine**: Operates exclusively on **28 dense lexical and structural features** modeled with **XGBoost**, running in **0.15ms** without live webpage crawling, DNS delays, or bot-blocking vulnerabilities.
+- **Dual-Stream TF-IDF Text Classifier**: Combines word ($1\text{--}2\text{-grams}$) and character boundary ($3\text{--}5\text{-grams}$) representations with 5-fold cross-validated sigmoid calibration (`CalibratedClassifierCV`). Directly feeds token weights into XAI evidence cards.
+- ** Cross-Modal Contradiction Analyzer**: Flags brand impersonation (e.g. text claiming "Chase Bank" while linking to an unauthorized domain), subdomain spoofing, and link shortener evasion against authoritative brand domain mappings.
+- ** Explainable AI (XAI)**: Generates human-readable evidence cards, token risk heatmaps, URL lexical anatomy tables, and defensive security guidance.
+- ** Cyber Threat Intelligence Dashboard**: High-contrast dark theme with animated SVG risk gauge meters, bimodal breakdown cards, and preloaded test case quick-loaders.
 
 ---
 
-## 📊 Empirical Benchmarks & Ablation Study
+##  Empirical Benchmarks & Ablation Study
 
 > **Evaluation Policy**: Metrics are evaluated on **100% held-out organic data** (zero synthetic data in test splits). Running `python run.py --train` retrains all models and writes empirical metrics to `ml/experiments/results/`.
 
@@ -65,7 +65,7 @@ Open your browser to:
 
 ---
 
-## 📁 Repository Structure
+##  Repository Structure
 
 ```text
 multimodal-fraud-detection/
@@ -165,7 +165,7 @@ multimodal-fraud-detection/
 
 ---
 
-## 🧪 Testing & Validation
+##  Testing & Validation
 
 ```bash
 # Run the automated pytest suite (30 comprehensive tests)
@@ -174,7 +174,7 @@ python -m pytest -v tests/
 
 ---
 
-## 🌐 REST API Endpoints
+##  REST API Endpoints
 
 - `POST /api/analyze` (or `POST /api/v1/analyze`): Master endpoint for analyzing SMS text and/or URL with full XAI evidence output.
 - `GET /api/health` (or `GET /api/v1/health`): System health check returning `{"status": "ok", "models_loaded": {...}}`.
